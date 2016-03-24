@@ -1,5 +1,11 @@
 ---
 - include: zookeeper.yml
+  when: zookeeper_install_type == "source"
+  tags:
+  - zookeeper
+
+- include: zookeeper-package.yml
+  when: zookeeper_install_type == "package"
   tags:
   - zookeeper
 

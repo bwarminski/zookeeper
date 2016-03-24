@@ -1,0 +1,21 @@
+---
+- name: apt-get update
+  sudo: yes
+  apt:
+    update_cache: yes
+- name: Install zookeeper and dependencies
+  sudo: yes
+  apt:
+    name: "{{item}}"
+  with_items:
+    - libzookeeper-java
+    - libzookeeper-java-doc
+    - libzookeeper-mt2
+    - zookeeper
+    - zookeeper-bin
+    - zookeeperd
+- name: start zookeeper
+  service:
+    name: zookeeper
+    state: started
+    enabled: yes

@@ -4,5 +4,6 @@
   sudo: yes
   vars:
     - test_environment: true
+    - exhibitor_build_connection: local
   roles:
   - zookeeper

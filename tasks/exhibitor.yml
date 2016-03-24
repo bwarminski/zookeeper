@@ -35,7 +35,7 @@
 
 
 - name: install exhibitor
-  when: exhibitor.build_connection == 'local'
+  when: exhibitor_build_connection == 'local'
   copy:
     src: "{{exhibitor_build_dir}}/exhibitor-{{exhibitor_version}}"
     dest: "{{exhibitor_install_dir}}/exhibitor.jar"

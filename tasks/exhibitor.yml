@@ -1,27 +1,45 @@
 ---
 - name: install maven
   apt: pkg=maven state=present
+  when: exhibitor_build_connection != 'local'
 
-- file: path=/opt/src state=directory
-- file: path=/opt/src/exhibitor-{{exhibitor_version}} state=directory
+- file:
+    path: "{{exhibitor_build_dir}}"
+    state: directory
+  connection: "{{exhibitor_build_connection}}"
+- file:
+    path: "{{exhibitor_build_dir}}/exhibitor-{{exhibitor_version}}"
+    state: directory
+  connection: "{{exhibitor_build_connection}}"
 - file: path={{exhibitor_install_dir}} state=directory
 
 - name: create exhibitor pom.xml
+  connection: "{{exhibitor_build_connection}}"
   template: >
     src=pom.xml.j2
-    dest=/opt/src/exhibitor-{{exhibitor_version}}/pom.xml
+    dest={{exhibitor_build_dir}}/exhibitor-{{exhibitor_version}}/pom.xml
 
 - name: build exhibitor
+  connection: "{{exhibitor_build_connection}}"
   command: >
     mvn clean package
-    chdir=/opt/src/exhibitor-{{exhibitor_version}}
-    creates=/opt/src/exhibitor-{{exhibitor_version}}/target
+    chdir={{exhibitor_build_dir}}/exhibitor-{{exhibitor_version}}
+    creates={{exhibitor_build_dir}}/exhibitor-{{exhibitor_version}}/target
 
 - name: install exhibitor
+  when: exhibitor_build_connection != 'local'
   command: >
     mv target/exhibitor-1.0.jar {{exhibitor_install_dir}}/exhibitor.jar
     chdir=/opt/src/exhibitor-{{exhibitor_version}}
     creates={{exhibitor_install_dir}}/exhibitor.jar
+
+
+- name: install exhibitor
+  when: exhibitor.build_connection == 'local'
+  copy:
+    src: "{{exhibitor_build_dir}}/exhibitor-{{exhibitor_version}}"
+    dest: "{{exhibitor_install_dir}}/exhibitor.jar"
+
 
 - name: create start script
   template: >

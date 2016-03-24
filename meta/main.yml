@@ -1,8 +1,7 @@
 ---
 galaxy_info:
-  author: playlist
-  company: Playlist
-  description: Installs Zookeeper
+  author: bwarminski
+  description: Installs Zookeeper and Exhibitor (based on playlist.zookeeper)
   min_ansible_version: 1.8
   license: MIT
   platforms:
@@ -12,9 +11,3 @@ galaxy_info:
   categories:
     - database
     - web
-
-dependencies:
-  - role: playlist.java
-    java_packages:
-      - openjdk-7-jre
-      - openjdk-7-jdk

@@ -7,6 +7,7 @@ zookeeper_password: ""
 zookeeper_data_dir: /var/lib/zookeeper
 zookeeper_install_dir: "/opt/zookeeper-{{zookeeper_version}}"
 zookeeper_log_dir: /var/log/zookeeper
+zookeeper_install_type: source
 
 exhibitor_version: 1.5.5
 exhibitor_install_dir: "/opt/exhibitor-{{exhibitor_version}}"
@@ -45,3 +46,5 @@ exhibitor_auto_manage_instances_settling_period_ms: 180000 # 3 minutes
 exhibitor_observer_threshold: 999
 exhibitor_auto_manage_instances_fixed_ensemble_size:
 exhibitor_auto_manage_instances_apply_all_at_once: 1
+exhibitor_build_connection: ssh
+exhibitor_build_dir: /opt/src
